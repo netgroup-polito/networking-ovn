@@ -12,7 +12,7 @@
 
      cd devstack
      cat << EOF >> local.conf
-     > enable_plugin networking-ovn http://git.openstack.org/openstack/networking-ovn
+     > enable_plugin networking-ovn https://github.com/netgroup-polito/networking-ovn.git
      > enable_service ovn
      > EOF
 
