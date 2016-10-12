@@ -20,7 +20,7 @@ ADMIN_PASSWORD=password
 OVN_REPO=https://github.com/netgroup-polito/ovs.git
 OVN_BRANCH=stable
 
-enable_plugin networking-ovn http://git.openstack.org/openstack/networking-ovn
+enable_plugin networking-ovn https://github.com/netgroup-polito/ovn-networking.git
 enable_service ovn-northd
 enable_service ovn-controller
 
