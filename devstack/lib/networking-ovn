@@ -432,7 +432,7 @@ function start_ovs {
 
         if is_provider_network || [[ $Q_USE_PROVIDERNET_FOR_PUBLIC == "True" ]]; then
             ovn_base_setup_bridge $OVS_PHYSICAL_BRIDGE
-            ovs-vsctl set open . external-ids:ovn-bridge-mappings=${PHYSICAL_NETWORK}:${OVS_PHYSICAL_BRIDGE}
+            ovs-vsctl --no-wait set open . external-ids:ovn-bridge-mappings=${PHYSICAL_NETWORK}:${OVS_PHYSICAL_BRIDGE}
         fi
     fi
 
@@ -553,7 +553,7 @@ function create_public_bridge {
     ext_gw_ifc=$(get_ext_gw_interface)
 
     sudo ovs-vsctl --may-exist add-br $ext_gw_ifc -- set bridge $ext_gw_ifc protocols=OpenFlow13
-    sudo ovs-vsctl set open . external-ids:ovn-bridge-mappings=provider:$ext_gw_ifc
+    sudo ovs-vsctl --no-wait set open . external-ids:ovn-bridge-mappings=provider:$ext_gw_ifc
     if [ -n "$FLOATING_RANGE" ]; then
         local cidr_len=${FLOATING_RANGE#*/}
         sudo ip addr add $PUBLIC_NETWORK_GATEWAY/$cidr_len dev $ext_gw_ifc
