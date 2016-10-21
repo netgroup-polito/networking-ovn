@@ -26,6 +26,9 @@ if is_service_enabled q-svc || is_ovn_service_enabled ovn-northd || is_ovn_servi
         install_ovn
         configure_ovn
         init_ovn
+        install_hover
+        install_iovisor_ovn
+
         # We have to start at install time, because Neutron's post-config
         # phase runs ovs-vsctl.
         start_ovs
@@ -38,6 +41,9 @@ if is_service_enabled q-svc || is_ovn_service_enabled ovn-northd || is_ovn_servi
         fi
 
         start_ovn
+
+        start_hover
+        start_iovisor_ovn
 
         # If not previously set by another process, set the OVN_*_DB
         # variables to enable OVN commands from any node.
