@@ -312,6 +312,8 @@ function install_hover {
 
     export PATH=$PATH:/usr/local/go/bin
 
+    sudo ln -s /usr/local/go/bin/go /usr/bin
+
     source .bashrc
 
     export GOPATH=$HOME/go
