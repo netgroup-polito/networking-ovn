@@ -23,6 +23,8 @@ OVN_BRANCH=stable
 enable_plugin networking-ovn https://github.com/netgroup-polito/networking-ovn.git
 enable_service ovn-northd
 enable_service ovn-controller
+enable_service hover
+enable_service iovisor-ovn
 
 # Use Neutron instead of nova-network
 disable_service n-net
