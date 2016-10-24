@@ -315,6 +315,8 @@ function install_hover {
     sudo rm -f /usr/bin/go
     sudo ln -s /usr/local/go/bin/go /usr/bin
 
+    export GOPATH=$HOME/go
+
     # Hover
     echo "installing hover dependencies"
     go get github.com/vishvananda/netns
