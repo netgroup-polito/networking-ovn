@@ -124,7 +124,7 @@ function is_ovn_service_enabled {
 # neutron-ovs-cleanup uses the OVSDB native interface.
 function ovn_base_setup_bridge {
     local bridge=$1
-    local addbr_cmd="sudo ovs-vsctl --no-wait -- --may-exist add-br $bridge"
+    local addbr_cmd="sudo ovs-vsctl --no-wait --may-exist add-br $bridge"
 
     if [ "$OVS_DATAPATH_TYPE" != "system" ] ; then
         addbr_cmd="$addbr_cmd -- set Bridge $bridge datapath_type=${OVS_DATAPATH_TYPE}"
