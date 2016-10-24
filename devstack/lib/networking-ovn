@@ -308,16 +308,12 @@ function install_hover {
     echo "installing go"
     curl -O https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz
     tar -xvf go1.6.2.linux-amd64.tar.gz
+
     sudo rm -rf /usr/local/go
     sudo mv go /usr/local
 
-    export PATH=$PATH:/usr/local/go/bin
-
+    sudo rm -f /usr/bin/go
     sudo ln -s /usr/local/go/bin/go /usr/bin
-
-    source .bashrc
-
-    export GOPATH=$HOME/go
 
     # Hover
     echo "installing hover dependencies"
@@ -326,7 +322,7 @@ function install_hover {
     go get github.com/gorilla/mux
     # to pull customized fork of netlink
     go get github.com/vishvananda/netlink
-    cd $GOPATH/src/github.com/vishvananda/netlink
+    cd $HOME/go/src/github.com/vishvananda/netlink
     git remote add drzaeus77 https://github.com/drzaeus77/netlink
     git fetch drzaeus77
     git reset --hard drzaeus77/master
@@ -339,6 +335,7 @@ function install_hover {
 # install_iovisor_ovn() - Downloads the iovisor:_ovn code
 function install_iovisor_ovn {
     echo "installing iovisor ovn"
+    go get github.com/netgroup-polito/iovisor-ovn/daemon
     go install github.com/netgroup-polito/iovisor-ovn/daemon
 }
 
@@ -396,7 +393,7 @@ function start_ovs {
     # than I can figure out how to make it work...
 
     if is_ovn_service_enabled ovn-controller || is_ovn_service_enabled ovn-controller-vtep ; then
-        local _OVSREMOTE="--remote=db:Open_vSwitch,Open_vSwitch,manager_options"
+        local _OVSREMOTE="--remote=db:Open_vSwitch,Open_vSwitch,manager_options  --remote=ptcp:6640:0.0.0.0"
         local _VTEPREMOTE=""
         local _OVSDB=conf.db
         local _VTEPDB=""
@@ -504,13 +501,13 @@ function start_ovn {
 # start_hover() - Start the hover deamon
 function start_hover {
     echo "starting hover"
-    run_process hover "sudo $GOPATH/bin/hoverd -listen 127.0.0.1:5002"
+    run_process hover "sudo $HOME/go/bin/hoverd -listen 127.0.0.1:5002"
 }
 
 # start_iovisor_ovn() - Starts the iovisor ovn deamon
 function start_iovisor_ovn {
     echo "starting iovisor-ovn"
-    run_process iovisor-ovn "sudo $GOPATH/bin/daemon -hover http://127.0.0.1:5002"
+    run_process iovisor-ovn "sudo $HOME/go/bin/daemon -hover http://127.0.0.1:5002"
 }
 
 # stop_ovn() - Stop running processes (non-screen)
