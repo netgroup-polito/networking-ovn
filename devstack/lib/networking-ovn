@@ -147,6 +147,24 @@ function cleanup_ovn {
     cd $_pwd
 }
 
+function cleanup_hover {
+
+    rm  $HOME/go1.6.2.linux-amd64.tar.gz
+
+    sudo rm -rf /usr/local/go
+    sudo rm -f /usr/bin/go
+
+    rm -rf $HOME/go/src/github.com/vishvananda/netns
+    rm -rf $HOME/go/src/github.com/willf/bitset
+    rm -rf $HOME/go/src/github.com/gorilla/mux
+    rm -rf $HOME/go/src/github.com/vishvananda/netlink
+    rm -rf $HOME/go/src/github.com/iovisor/iomodules/
+}
+
+function clean_iovisor_ovn {
+    rm -rf $HOME/go/src/github.com/netgroup-polito/iovisor-ovn
+}
+
 # configure_ovn() - Set config files, create data dirs, etc
 function configure_ovn {
     echo "Configuring OVN"
@@ -527,6 +545,16 @@ function stop_ovn {
         /usr/local/share/openvswitch/scripts/ovn-ctl stop_northd
     fi
     sudo killall ovsdb-server
+}
+
+# stop_hover() - Stops hover
+function stop_hover {
+    sudo pkill -f $HOME/go/bin/hoverd
+}
+
+# stop_iovisor_ovn() - Stops hover
+function stop_iovisor_ovn {
+    sudo pkill -f $HOME/go/bin/daemon
 }
 
 # stop_ovs_dp() - Stop OVS datapath

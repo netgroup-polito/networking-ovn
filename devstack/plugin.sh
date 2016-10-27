@@ -62,8 +62,12 @@ if is_service_enabled q-svc || is_ovn_service_enabled ovn-northd || is_ovn_servi
 
     if [[ "$1" == "unstack" ]]; then
         stop_ovn
+        stop_hover
+        stop_iovisor_ovn
         stop_ovs_dp
         cleanup_ovn
+        cleanup_hover
+        clean_iovisor_ovn
     fi
 fi
 
