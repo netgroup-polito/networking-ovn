@@ -327,6 +327,19 @@ function install_ovn {
 # install_hover() - Downloads and installs hoverd and its requirements
 function install_hover {
 
+    # install bcc and dependencies
+    echo "installing bcc dependencies"
+    install_package "install bison build-essential cmake flex git libedit-dev"
+    install_package "libllvm3.7 llvm-3.7-dev libclang-3.7-dev python zlib1g-dev libelf-dev"
+    install_package "luajit luajit-5.1-dev"
+
+    # echo installing bcc
+    git clone https://github.com/iovisor/bcc.git
+    mkdir bcc/build; cd bcc/build
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+    make
+    sudo make install
+
     echo "installing go"
     curl -O https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz
     tar -xvf go1.6.2.linux-amd64.tar.gz
