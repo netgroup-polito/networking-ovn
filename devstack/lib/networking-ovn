@@ -153,7 +153,7 @@ function cleanup_ovn {
 
 function cleanup_hover {
 
-    rm  $HOME/go1.6.2.linux-amd64.tar.gz
+    rm -f $HOME/go1.6.2.linux-amd64.tar.gz
 
     sudo rm -rf /usr/local/go
     sudo rm -f /usr/bin/go
