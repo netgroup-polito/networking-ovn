@@ -144,6 +144,10 @@ function cleanup_ovn {
     local _pwd=$(pwd)
     cd $DEST/$OVN_REPO_NAME
     sudo make uninstall
+
+    sudo ip link delete br-int
+    sudo ip link delete br-ext
+
     cd $_pwd
 }
 
@@ -463,6 +467,13 @@ function start_ovs {
         sudo /usr/local/share/openvswitch/scripts/ovs-vtep --log-file=$LOGDIR/ovs-vtep.log --pidfile --detach br-vtep
         vtep-ctl set-manager tcp:$HOST_IP:6640
     fi
+
+    # this is a hugly workaround:
+    # for some reason nova compute tries to set the mtu in the br-int
+    # bridge, as ovs-vswitch is not running such inteface does not exist,
+    # then a dummy interface to avoid commands failing is created
+    sudo ip link add br-int type dummy
+    sudo ip link add br-ext type dummy
 
     cd $_pwd
 }
