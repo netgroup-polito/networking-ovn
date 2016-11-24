@@ -327,6 +327,8 @@ function install_ovn {
 # install_hover() - Downloads and installs hoverd and its requirements
 function install_hover {
 
+    local _pwd=$(pwd)
+
     # install bcc and dependencies
     echo "installing bcc dependencies"
     install_package bison build-essential cmake flex git libedit-dev
@@ -367,6 +369,8 @@ function install_hover {
     echo "installing hover"
     go get github.com/iovisor/iomodules/hover
     go install github.com/iovisor/iomodules/hover/hoverd
+
+    cd $_pwd
 }
 
 # install_iovisor_ovn() - Downloads the iovisor:_ovn code
